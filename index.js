@@ -2,10 +2,16 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// basic home route
-app.get('/', (req, res) => {
-  res.send('Welcome to my API');
-});
+// Enable CORS to allow cross origin request
+const cors = require("cors");
+app.use(cors());
+// This middleware allows us to post JSON in request.body
+app.use(express.json());
+
+const stationRoutes = require('./routes/station-routes');
+
+// all charging station routes
+app.use('/charging-stations', stationRoutes);
 
 app.listen(PORT, () => {
   console.log(`running at http://localhost:${PORT}`);

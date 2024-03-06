@@ -1,15 +1,29 @@
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
-exports.up = function(knex) {
-  
-};
+const { decrypt } = require("dotenv");
 
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = function(knex) {
+exports.up = function (knex) {
+    return knex.schema
+      .createTable("charging_station", (table) => {
+        table.increments("id").primary();
+        table.string("station_name").notNullable();
+        table.decimal("lat").notNullable();
+        table.decimal("lng").notNullable();
+        table.string("station_address").notNullable();
+        table.string("station_status").notNullable()
+        table.timestamp("created_at").defaultTo(knex.fn.now());
+        table
+          .timestamp("updated_at")
+          .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
+      });
+  };
   
-};
+  /**
+   * @param { import("knex").Knex } knex
+   * @returns { Promise<void> }
+   */
+  exports.down = function (knex) {
+    return knex.schema.dropTable("charging_station");
+  };
