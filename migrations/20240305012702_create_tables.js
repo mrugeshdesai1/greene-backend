@@ -9,8 +9,8 @@ exports.up = function (knex) {
       .createTable("charging_station", (table) => {
         table.increments("id").primary();
         table.string("station_name").notNullable();
-        table.decimal("lat").notNullable();
-        table.decimal("lng").notNullable();
+        table.decimal("lat", [8] , [4]).notNullable();
+        table.decimal("lng", [8] , [4]).notNullable();
         table.string("station_address").notNullable();
         table.string("station_status").notNullable()
         table.timestamp("created_at").defaultTo(knex.fn.now());
