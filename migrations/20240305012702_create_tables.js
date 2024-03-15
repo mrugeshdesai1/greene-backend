@@ -20,6 +20,8 @@ exports.up = function (knex) {
       })
       .createTable("Users" , (table) => {
         table.increments("userId").primary();
+        table.string("firstName").notNullable();
+        table.string("lastName").notNullable();
         table.string("username").notNullable().unique();
         table.string("email").notNullable();
         table.string("password").notNullable();

@@ -6,13 +6,13 @@ require('dotenv').config;
 const register = async (req, res) => {
 
     // get the username, email and password as a part register request
-    const { username, email, password } = req.body;
+    const { firstName, lastName, username, email, password } = req.body;
     
     // Hash the password
   const hashedPassword = await bcrypt.hash(password, 10);
 
   knex('Users')
-    .insert({username,email,password:hashedPassword})
+    .insert({firstName, lastName,username,email,password:hashedPassword})
     .then((data) => {
       res.status(200).json({ message: 'User registered successfully' });
     })

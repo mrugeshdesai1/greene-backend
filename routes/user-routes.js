@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const userController = require('../controllers/user-controller');
 
+
 function authorize(req, res, next) {
     // STEP 2: Logic for getting the token and
     // decoding the contents of the token. The
