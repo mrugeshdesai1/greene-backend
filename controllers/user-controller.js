@@ -25,6 +25,7 @@ const login = async (req, res) => {
 
     // get the username, email and password as a part login request
     const { username,password } = req.body;
+    console.log(req.body)
     
     try {
         // Retrieve user from the database based on the email and 
@@ -42,9 +43,9 @@ const login = async (req, res) => {
         }
 
         // Create JWT token with user's username as payload
-        const token = jwt.sign({ username:user.username }, `${process.env.TOKEN}`);
+        const token = jwt.sign({ username:user.username , userId: user.userId }, `${process.env.TOKEN}`);
 
-        res.json({ token:token });
+        res.json({ token:token , id: user.userId , firstName:user.firstName , lastName:user.lastName ,username:user.username , email: user.email});
 
     } catch(err) {
         res.status(403).send({token:null})
@@ -52,14 +53,18 @@ const login = async (req, res) => {
 
 };
 
-const profile = async (req, res) => {
-
-    console.log(req.decoded);
-    res.json(req.decoded);
+const currentUser = async (req, res) => {
+  
+  try {
+    //  res.json({ id: user.userId , firstName:user.firstName , lastName:user.lastName ,username:user.username , email: user.email});
+    res.json(req.user)
+  } catch(err) {
+      res.status(403).send({token:null})
+  }
 
 };
 
 
 module.exports = {
-  register , login , profile
+  register , login , currentUser
 }
