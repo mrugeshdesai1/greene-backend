@@ -29,6 +29,20 @@ exports.up = function (knex) {
         table
           .timestamp("updated_at")
           .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
+      })
+      .createTable("subscriptions" , (table) => {
+        table.increments("subscriptionId").primary();
+        table.string("planName").notNullable();
+        table
+          .integer("user_id")
+          .unsigned()
+          .references("Users.userId")
+          .onUpdate("CASCADE")
+          .onDelete("CASCADE");
+        table.timestamp("created_at").defaultTo(knex.fn.now());
+        table
+          .timestamp("updated_at")
+          .defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
       });
   };
   
@@ -37,5 +51,5 @@ exports.up = function (knex) {
    * @returns { Promise<void> }
    */
   exports.down = function (knex) {
-    return knex.schema.dropTable("charging_station").dropTable("Users");
+    return knex.schema.dropTable("subscriptions").dropTable("Users").dropTable("charging_station");
   };
