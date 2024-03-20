@@ -25,7 +25,28 @@ const subscribe = async (req, res) => {
 
 };
 
+const findSubscription = (req, res) => {
+    knex("subscriptions")
+      .where({ user_id: req.params.id })
+      .then((usersFound) => {
+  
+        if (usersFound.length === 0) {
+          return res
+            .status(404)
+            .json({ message: `Subscription details not found` });
+        }
+  
+        const userData = usersFound[0];
+  
+        res.status(200).json(userData);
+      })
+      .catch(() => {
+        res.status(500).json({
+          message: `Unable to retrieve user data for user}`,
+        });
+      });
+  }
 
 module.exports = {
-  subscribe
+  subscribe , findSubscription
 }

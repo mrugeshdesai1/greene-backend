@@ -8,4 +8,7 @@ router.route('/currentUser').get(protectedController.currentUser);
 // Endpoint for subscribing the plan
 router.route('/subscribe').post(subscriptionController.subscribe)
 
+// Endpoint for getting the subscription details of the given user
+router.route('/subscription/:id').get(subscriptionController.findSubscription)
+
 module.exports = router;
