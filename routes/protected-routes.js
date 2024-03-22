@@ -12,6 +12,9 @@ router.route('/subscribe').post(subscriptionController.subscribe)
 // Endpoint for getting the subscription details of the given user
 router.route('/subscription/:id').get(subscriptionController.findSubscription)
 
+// Endpoint for deleting the subscription of the given user
+router.route('/subscription/:id').delete(subscriptionController.deleteSubscription)
+
 // Endpoint for Starting of charging session
 router.route('/start-session').post(sessionController.startSession)
 

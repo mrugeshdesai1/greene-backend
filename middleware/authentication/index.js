@@ -5,7 +5,7 @@ ExtractJwt = require("passport-jwt").ExtractJwt;
 require('dotenv').config;
 
 // JWT Strategy
-
+// check if the JWT exist and if it is extract the token
 let jwtOptions = {
     jwtFromRequest: (req) => {
       return (
@@ -15,6 +15,8 @@ let jwtOptions = {
     secretOrKey: `${process.env.TOKEN}`,
 };
 
+//from the extracted JWT payload, check if it is expired or not
+//If the JWT is not expired, find the user corresponding to the user id and send the response as userData. 
 passport.use(
     "jwt",
     new JwtStrategy(jwtOptions, async (jwtPayload, done) => {
